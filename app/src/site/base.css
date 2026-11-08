@@ -1,0 +1,5 @@
+/* Lean base for the public site: Tailwind's preflight reset and nothing else.
+ * The scaffold's styles.css (Quanta tokens, composer, media cards, ~75 kB gzip) is only
+ * loaded by the /app route, so shoppers never download it. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/preflight.css" layer(base);
