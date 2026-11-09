@@ -36,21 +36,22 @@ export const scrollScrubScenes: ScrollScrubScene[] = [
     tags: ["Curl Cream", "Curl Therapy"], align: "left", actions: shopNow, scroll: 1.3, ...leg("01"),
   },
   {
-    id: "curl-cream", label: "Curl Cream", kicker: "Curl Cream",
+    id: "curl-cream", label: "Cream", kicker: "Curl Cream",
     title: "Soft, defined, less frizz.",
     body: "Curl Cream softens, moisturises and defines without weighing curls down.",
     tags: ["Leave-in", "All curl types"], align: "left", scroll: 2, ...leg("02"),
   },
   {
-    id: "curl-therapy", label: "Curl Therapy", kicker: "Curl Therapy",
+    id: "curl-therapy", label: "Therapy", kicker: "Curl Therapy",
     title: "Hydrate. Repair. Define.",
     body: "Curl Therapy adds keratin or protein care for tired, frizz-prone curls.",
     tags: ["Keratin", "Protein"], align: "left", scroll: 1.8, ...leg("03"),
   },
   {
-    id: "styling-powder", label: "Styling Powder", kicker: "Hair Styling Powder",
+    id: "styling-powder", label: "Powder", kicker: "Hair Styling Powder",
     title: "Then add the lift.",
     body: "Styling Powder gives instant volume and a matte, natural hold.",
-    tags: ["GUM 01", "BERRY 02", "MELON 03"], align: "left", actions: h(Fragment, null, shopCurl, shopPowder), scroll: 1.8, ...leg("04"),
+    // The last band also carries the one viewport of unpin travel, so it is one longer than its siblings: the powder cloud then fills the frame while the stage is still pinned.
+    tags: ["GUM 01", "BERRY 02", "MELON 03"], align: "left", actions: h(Fragment, null, shopCurl, shopPowder), scroll: 2.8, ...leg("04"),
   },
 ];

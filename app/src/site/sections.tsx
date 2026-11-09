@@ -171,7 +171,7 @@ export function ProductCell({ p, span, jar, className = "" }: { p: Product; span
           </p>
         </div>
         {/* Swap for a Shopify cart permalink (variant id) once products exist in the store. */}
-        <a className="bag-btn" href={shopUrl(p)} rel="noopener" data-cta="add-to-bag" aria-label={`Add ${productTitle(p)} to bag`}>
+        <a className="bag-btn" href={shopUrl(p)} rel="noopener" data-cta="add-to-bag" aria-label={`Add to bag: ${productTitle(p)}`}>
           Add to bag
         </a>
       </div>

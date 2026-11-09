@@ -33,7 +33,7 @@ html { background: #0a0b09; color-scheme: dark; -webkit-text-size-adjust: 100%; 
   text-rendering: optimizeLegibility;
 }
 .mc *, .mc *::before, .mc *::after { box-sizing: border-box; }
-.mc a { color: inherit; }
+:where(.mc a) { color: inherit; }
 .mc img { display: block; max-width: 100%; height: auto; }
 .mc h1, .mc h2, .mc h3, .mc h4 { margin: 0; font-family: var(--display); font-weight: 800; letter-spacing: -0.035em; line-height: 1; text-wrap: balance; }
 .mc p { margin: 0; }

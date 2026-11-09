@@ -32,10 +32,10 @@ function Arrow() {
 export function Logo() {
   return (
     <Link to="/" className="logo" aria-label="Magic Cosmetics home">
-      <b>Magic</b>
+      <b>Magic</b>{" "}
       <i>
         <Star />
-      </i>
+      </i>{" "}
       <small>Cosmetics</small>
     </Link>
   );
