@@ -1,6 +1,6 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 
-import { COLLECTIONS, SHOP_URL, productsIn } from "@/site/data";
+import { COLLECTIONS, productsIn, shopCollectionUrl } from "@/site/data";
 import { GUIDES } from "@/site/guides";
 import { ProductCell } from "@/site/sections";
 import { breadcrumbLd, itemListLd, orgLd, pageHead } from "@/site/seo";
@@ -53,7 +53,7 @@ function Collection() {
   const items = productsIn(handle);
   const guides = GUIDES.filter((g) => c.guides.includes(g.slug));
   return (
-    <Shell ctaHref={`${SHOP_URL}/collections/${handle}`}>
+    <Shell ctaHref={shopCollectionUrl(handle)}>
       <section className="page">
         <div className="wrap">
           <Crumbs

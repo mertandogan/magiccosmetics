@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-import { BRAND, FREE_DELIVERY_OVER, SHOP_URL } from "./data";
+import { BRAND, CHECKOUT_LIVE, FREE_DELIVERY_OVER, SHOP_URL } from "./data";
 import { GUIDES } from "./guides";
 
 /** Typed link targets, spread into <Link {...collLink("curl-care")} />. */
@@ -158,20 +158,22 @@ export function Footer() {
           <div className="ftr__brand">
             <Logo />
             <p>Curl care and styling powder from a UK brand, sold direct to you. Trusted by barbers.</p>
-            {/* Standard Shopify newsletter form: works as soon as the store at SHOP_URL is live. */}
-            <form className="news" method="post" action={`${SHOP_URL}/contact#contact_form`}>
-              <input type="hidden" name="form_type" value="customer" />
-              <input type="hidden" name="utf8" value="✓" />
-              <input type="hidden" name="contact[tags]" value="newsletter" />
-              <label className="sr" htmlFor="news-email">
-                Email address
-              </label>
-              <div className="news__row">
-                <input id="news-email" type="email" name="contact[email]" required autoComplete="email" placeholder="Your email" />
-                <button type="submit">Subscribe</button>
-              </div>
-              <p className="news__fine">New products and offers. Unsubscribe at any time.</p>
-            </form>
+            {/* Standard Shopify newsletter form. It posts to the store at SHOP_URL, so it is hidden until the new store is live (the current store's contact form has not been tested from here). */}
+            {CHECKOUT_LIVE && (
+              <form className="news" method="post" action={`${SHOP_URL}/contact#contact_form`}>
+                <input type="hidden" name="form_type" value="customer" />
+                <input type="hidden" name="utf8" value="✓" />
+                <input type="hidden" name="contact[tags]" value="newsletter" />
+                <label className="sr" htmlFor="news-email">
+                  Email address
+                </label>
+                <div className="news__row">
+                  <input id="news-email" type="email" name="contact[email]" required autoComplete="email" placeholder="Your email" />
+                  <button type="submit">Subscribe</button>
+                </div>
+                <p className="news__fine">New products and offers. Unsubscribe at any time.</p>
+              </form>
+            )}
           </div>
           <nav aria-label="Shop">
             <h2>Shop</h2>

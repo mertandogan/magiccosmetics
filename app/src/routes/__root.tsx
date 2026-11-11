@@ -104,8 +104,8 @@ function buildHead(meta: AppMeta) {
     links: [
       { rel: "stylesheet", href: baseCss },
       { rel: "stylesheet", href: siteCss },
-      { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/outfit-latin-800-normal.woff2", crossOrigin: "anonymous" as const },
-      { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/outfit-latin-400-normal.woff2", crossOrigin: "anonymous" as const },
+      { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/outfit-latin-wght-normal.woff2", crossOrigin: "anonymous" as const },
+      { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/ibm-plex-mono-latin-400-normal.woff2", crossOrigin: "anonymous" as const },
       ...(favicon ? [{ rel: "icon", href: favicon, type: "image/svg+xml" }] : []),
     ],
   };

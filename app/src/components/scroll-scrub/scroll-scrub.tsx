@@ -556,6 +556,23 @@ export function ScrollScrub({
       passive: true,
     });
 
+    // The posters of the later chapters are fetched just after the page has loaded, so they never
+    // compete with the first poster, the fonts and the scripts for the first paint.
+    let postersTimer = 0;
+    const allowPosters = () => {
+      for (const segment of runtime) {
+        segment.layer.removeAttribute("data-poster-wait");
+      }
+    };
+    const onWindowLoad = () => {
+      postersTimer = window.setTimeout(allowPosters, 300);
+    };
+    if (document.readyState === "complete") {
+      onWindowLoad();
+    } else {
+      window.addEventListener("load", onWindowLoad, { once: true });
+    }
+
     layout();
     frame = window.requestAnimationFrame(tick);
 
@@ -568,6 +585,8 @@ export function ScrollScrub({
       window.removeEventListener("orientationchange", layout);
       window.removeEventListener("pointerdown", onFirstGesture);
       window.removeEventListener("touchstart", onFirstGesture);
+      window.removeEventListener("load", onWindowLoad);
+      window.clearTimeout(postersTimer);
       root.style.removeProperty("--ss-progress");
       delete root.dataset.activeSection;
 
@@ -606,6 +625,7 @@ export function ScrollScrub({
             return (
               <figure
                 className={`scroll-scrub__layer scroll-scrub__layer--${segment.kind}`}
+                data-poster-wait={index === 0 ? undefined : ""}
                 data-scroll-scrub-layer=""
                 key={segment.key}
                 style={layerStyle}

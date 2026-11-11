@@ -1,13 +1,16 @@
 import { BRAND, PRODUCTS, SHOP_URL, SITE_URL, productTitle, shopUrl, type Faq, type Product } from "./data";
 import type { Guide } from "./guides";
+import appMeta from "../app-meta.json";
 import siteCss from "./site.css?url";
 
 const OG_DEFAULT = "/assets/og/magic-og.jpg";
+/** Share card: the uploaded OG image when app-meta.json carries an absolute URL (so link previews work on any host), else our own asset. */
+const OG_IMAGE = typeof appMeta.og_image_url === "string" && appMeta.og_image_url.startsWith("http") ? appMeta.og_image_url : OG_DEFAULT;
 
 type HeadInput = { title: string; description: string; path: string; image?: string; type?: "website" | "article" | "product"; ld?: unknown[] };
 
 /** Shared <head> for every public page: title, description, canonical, Open Graph and JSON-LD. */
-export function pageHead({ title, description, path, image = OG_DEFAULT, type = "website", ld = [] }: HeadInput) {
+export function pageHead({ title, description, path, image = OG_IMAGE, type = "website", ld = [] }: HeadInput) {
   const url = `${SITE_URL}${path === "/" ? "/" : path}`;
   const img = image.startsWith("http") ? image : `${SITE_URL}${image}`;
   return {

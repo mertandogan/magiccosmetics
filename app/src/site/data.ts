@@ -1,7 +1,29 @@
 import manifest from "./products-manifest.json";
 
 export const SITE_URL = "https://magiccosmetics.co.uk";
-export const SHOP_URL = "https://shop.magiccosmetics.co.uk";
+/**
+ * Flip to true when the new Shopify store at shop.magiccosmetics.co.uk is live and its product handles match our keys.
+ * Until then Shop now, Add to bag and the newsletter form use the current store, so the shared preview has no dead buttons.
+ * At launch magiccosmetics.co.uk is served by this site, so this MUST be true before the domain moves.
+ */
+export const CHECKOUT_LIVE = false;
+export const SHOP_URL = CHECKOUT_LIVE ? "https://shop.magiccosmetics.co.uk" : "https://magiccosmetics.co.uk";
+export const SHOP_HOST = SHOP_URL.replace("https://", "");
+/** Handles on the current store (several do not match their titles there, so these are mapped by title). */
+const CURRENT_STORE_PRODUCTS: Record<string, string> = {
+  "curl-cream-200ml": "magic-cosmetics-curl-cream-200ml",
+  "curl-cream-pump-200ml": "magic-cosmetics-curl-cream-200ml-copy",
+  "curl-cream-pump-400ml": "magic-cosmetics-curl-cream-pump-400ml",
+  "avocado-oil-curl-cream-250ml": "magic-cosmetics-avocado-oil-curl-cream-250ml",
+  "avocado-oil-curl-cream-pump-200ml": "magic-cosmetics-avocado-oil-curl-cream-pump-400ml-copy",
+  "avocado-oil-curl-cream-pump-400ml": "magic-cosmetics-avocado-oil-curl-cream-pump-200ml",
+  "curl-therapy-keratin-200ml": "magic-cosmetics-curl-therapy-keratin-200ml",
+  "curl-therapy-protein-200ml": "magic-cosmetics-curl-therapy-keratin-200ml-copy",
+  "hair-styling-powder-gum-01": "magic-cosmetics-hair-styling-powder-20g-gum-01",
+  "hair-styling-powder-berry-02": "magic-cosmetics-hair-styling-powder-20g-berry-02",
+  "hair-styling-powder-melon-03": "magic-cosmetics-hair-styling-powder-20g-melon-03",
+};
+const CURRENT_STORE_COLLECTIONS: Record<string, string> = { "curl-care": "curl-care-treatment", "styling-powder": "powder-wax" };
 /** Only the production domain may be indexed; any other host (preview, workers.dev) gets noindex and a blocking robots.txt. */
 export const isProductionHost = (host: string) => ["magiccosmetics.co.uk", "www.magiccosmetics.co.uk"].includes(host.toLowerCase().split(":")[0]);
 /** Browser chrome colour (stage black from the design brief). */
@@ -179,7 +201,13 @@ export function productsIn(collection: string) {
 }
 export const productByKey = (key: string) => PRODUCTS.find((p) => p.key === key);
 export const money = (n: number) => `£${n.toFixed(2)}`;
-export const shopUrl = (p: Product) => `${SHOP_URL}/products/${p.key}`;
+export const shopUrl = (p: Product) => {
+  if (CHECKOUT_LIVE) return `${SHOP_URL}/products/${p.key}`;
+  const handle = CURRENT_STORE_PRODUCTS[p.key];
+  return handle ? `${SHOP_URL}/products/${handle}` : SHOP_URL;
+};
+export const shopCollectionUrl = (handle: string) =>
+  CHECKOUT_LIVE ? `${SHOP_URL}/collections/${handle}` : `${SHOP_URL}/collections/${CURRENT_STORE_COLLECTIONS[handle] ?? "all"}`;
 export const productTitle = (p: Product) => `${p.name} ${p.size}`;
 
 export const FINDER = [
@@ -202,6 +230,6 @@ export const HOME_FAQS: Faq[] = [
   { q: "How do I use hair styling powder?", a: "Apply it to dry hair, shake a small amount onto your fingertips or at the roots, work it through and style as normal. Build up gradually for more hold." },
   { q: "What is the difference between GUM 01, BERRY 02 and MELON 03?", a: "All three are matte 20g styling powders. GUM 01 gives strong hold, BERRY 02 gives flexible hold and MELON 03 gives a natural hold." },
   { q: "Do you deliver across the UK?", a: `Yes. We deliver within the UK, with free standard delivery on orders over £${FREE_DELIVERY_OVER}. Delivery options and times are shown at checkout.` },
-  { q: "Where do I check out?", a: "Shop now takes you to our secure Shopify checkout at shop.magiccosmetics.co.uk, where you see current prices, stock and delivery options before you pay." },
+  { q: "Where do I check out?", a: `Shop now takes you to our secure Shopify checkout at ${SHOP_HOST}, where you see current prices, stock and delivery options before you pay.` },
   { q: "Can barbers get a free Styling Powder?", a: "Yes. Enter your barber code at checkout and a free Styling Powder 20g is added to your order." },
 ];
