@@ -175,7 +175,7 @@ export const PRODUCTS: Product[] = [
       { q: "Does styling powder wash out?", a: "Yes. Wash it out with your normal shampoo." },
       { q: "Which shade has the strongest hold?", a: "GUM 01 is the strong-hold shade, BERRY 02 is flexible and MELON 03 is a natural hold. All three have a matte finish." },
     ],
-    guides: ["how-to-use-hair-styling-powder", "how-to-define-curls"], hasImage: false, hold: { label: s.hold, level: s.level },
+    guides: ["how-to-use-hair-styling-powder", "how-to-define-curls"], hasImage: true, hold: { label: s.hold, level: s.level },
   })),
 ];
 
